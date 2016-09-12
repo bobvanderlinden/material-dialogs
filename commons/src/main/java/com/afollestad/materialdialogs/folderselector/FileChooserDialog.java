@@ -35,7 +35,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
 
     private File parentFolder;
     private File[] parentContents;
-    private boolean canGoUp = true;
+    private boolean canGoUp;
     private FileCallback mCallback;
 
     public interface FileCallback {
@@ -140,6 +140,7 @@ public class FileChooserDialog extends DialogFragment implements MaterialDialog.
         if (!getArguments().containsKey("current_path"))
             getArguments().putString("current_path", getBuilder().mInitialPath);
         parentFolder = new File(getArguments().getString("current_path"));
+        canGoUp = parentFolder.getParentFile() != null;
         parentContents = listFiles(getBuilder().mMimeType);
         return new MaterialDialog.Builder(getActivity())
                 .title(parentFolder.getAbsolutePath())
